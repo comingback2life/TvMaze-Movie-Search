@@ -1,26 +1,43 @@
 //search through TV Maze library
 const form = document.querySelector("#searchForm");
+const container = document.querySelector("#contentContainer");
 let movieLink = [];
 form.addEventListener("submit", (e) => {
   e.preventDefault();
+  container.innerHTML = "";
+  const movieName = form.elements.tvShowTitle.value;
+  printMovieData(movieName);
 });
 
-const printMovieData = function () {
+const printMovieData = function (movieName) {
   let movieData;
-  const queryString = "suits";
-  getMovieData(queryString).then((data) => {
-    movieData = data;
-    console.log(movieData);
-    for (let i = 0; i < movieData.length; i++) {
-      console.log(movieData[i].show.image);
-      if (movieData[i].show.image === null) {
-        console.log(movieData[i].show.name);
+  getMovieData(movieName)
+    .then((data) => {
+      movieData = data;
+      for (movies of movieData) {
+        if (movies.show.image) {
+          const img = document.createElement("img");
+          const figCaption = document.createElement("figCaption");
+          figCaption.classList.add("text-center");
+          const figure = document.createElement("figure");
+          img.classList.add("spacetheImages");
+          if (movies.show.rating.average) {
+            figCaption.innerText = `IMDB : ${movies.show.rating.average}`;
+          } else {
+            figCaption.innerText = "No IMDB Rating found";
+          }
+          img.src = movies.show.image.medium;
+          figure.append(img);
+          figure.append(figCaption);
+          container.append(figure);
+        }
       }
-      movieLink = movieData[i].show.image;
-    }
-  });
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 };
-
+//https://stackoverflow.com/questions/47604040/how-to-get-data-returned-from-fetch-promise/47604112
 const getMovieData = async function (query) {
   return await fetch(`https://api.tvmaze.com/search/shows?q=${query}`).then(
     async (res) => {
@@ -29,4 +46,3 @@ const getMovieData = async function (query) {
     }
   );
 };
-printMovieData();

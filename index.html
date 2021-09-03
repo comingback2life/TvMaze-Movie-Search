@@ -3,14 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>TV Maze Search API</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="app.css" />
   </head>
   <body>
-    <h1>Display a TV show</h1>
-    <form action="" id="searchForm">
-      <input type="text" name="tvShowTitle" id="showTitle" />
-      <button type="submit">Search</button>
-    </form>
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand">Movie Search</a>
+        <form class="d-flex" id="searchForm" method="POST">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+            name="tvShowTitle"
+            id="showTitle"
+          />
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+
+    <div class="container-fluid" id="contentContainer"></div>
+
     <script src="main.js"></script>
   </body>
 </html>
