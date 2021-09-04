@@ -9,9 +9,9 @@ form.addEventListener("submit", (e) => {
   printMovieData(movieName);
 });
 
-const printMovieData = function (movieName) {
+const printMovieData = async function (movieName) {
   let movieData;
-  getMovieData(movieName)
+  movieData = await getMovieData(movieName)
     .then((data) => {
       movieData = data;
       for (movies of movieData) {
@@ -39,10 +39,8 @@ const printMovieData = function (movieName) {
 };
 //https://stackoverflow.com/questions/47604040/how-to-get-data-returned-from-fetch-promise/47604112
 const getMovieData = async function (query) {
-  return await fetch(`https://api.tvmaze.com/search/shows?q=${query}`).then(
-    async (res) => {
-      const data = await res.json();
-      return data;
-    }
-  );
+  return fetch(`https://api.tvmaze.com/search/shows?q=${query}`).then((res) => {
+    const data = res.json();
+    return data;
+  });
 };
